@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_5q*t$tzn!io7^#hm9yiqts^l9aiiio14r5c$pme_gktgd7s8w'
 
 TIME_ZONE = 'Asia/Kolkata'
+LOGIN_REDIRECT_URL = '/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -127,3 +128,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+SESSION_COOKIE_AGE = 5*60

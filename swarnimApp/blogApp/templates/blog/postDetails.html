@@ -1,0 +1,67 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <article class="post">
+        {% if post.publishDate %}
+            <time class="date">
+                {{ post.publishDate }}
+            </time>
+        {% endif %}
+
+
+        
+        
+        <h2>{{ post.title }}</h2>
+
+        
+        {% if user.is_authenticated %}
+
+            {% if not post.publishDate %}
+                <a class="btn btn-default" href = "{% url 'post_publish' pk=post.pk %}">Publish</a>
+            {% endif %}   
+
+            <a href = "{% url 'post_edit' pk=post.pk %}">{% include './icons/pencil-fill.svg' %}</a>
+            <a href = "{% url 'post_delete' pk=post.pk %}" >{% include './icons/x-square-fill.svg' %}</a>
+
+        {% endif %}
+
+
+        <p>{{ post.text|linebreaksbr }}</p>
+
+        <hr>
+        {% for comment in post.comments.all %}
+            {% if user.is_authenticated or comment.approvedComment %}
+                <div class='comment'>
+                    <div class='date'>
+                        {{comment.createdDate}} 
+                            
+                        {% if not comment.approvedComment %}
+                            <a href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+                            <a href="{% url 'comment_remove' pk=comment.pk %}">Remove</a>
+                        
+                        {% endif %}   
+                    </div>
+
+                    
+
+
+                    <strong>
+                        {{comment.author}}
+                    </strong>
+                    <p>
+                        {{comment.text}}
+                    </p>
+
+                </div>
+            {% endif %}
+        {% empty %}
+                <p>No comments here yet.</p>    
+        {% endfor %}
+
+        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+
+
+    </article>
+
+{% endblock %}
